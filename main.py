@@ -3,20 +3,20 @@ from src.algo import findCheapestPrice
 from src.utils import read_json_file
 
 
-def spread_data_from_json(item):
-    n = item['n']
-    flights = item['flights']
-    src = item['src']
-    dst = item['dst']
-    k = item['k']
+def extract_flight_data(test_case):
+    n = test_case['n']
+    flights = test_case['flights']
+    src = test_case['src']
+    dst = test_case['dst']
+    k = test_case['k']
     return n, flights, src, dst, k
 
 def main():
-    json_data = read_json_file('question.json')
-    for item in json_data:
-        n, flights, src, dst, k = spread_data_from_json(item)
-        result = findCheapestPrice(n, flights, src, dst, k)
-        print(f"The cheapest price from {src} to {dst} with at most {k} stops is: {result}")
+    flight_test_cases = read_json_file('question.json')
+    for test_case in flight_test_cases:
+        n, flights, src, dst, k = extract_flight_data(test_case)
+        cheapest_price = findCheapestPrice(n, flights, src, dst, k)
+        print(f"The cheapest price from {src} to {dst} with at most {k} stops is: {cheapest_price}")
 
 if __name__ == '__main__':
     main()

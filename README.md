@@ -6,14 +6,19 @@ This program finds the cheapest flight price between two cities with a limited n
 
 The objective is to provide an efficient solution for finding the optimal cost route between cities, which is a common problem in travel planning and logistics.
 
+The program includes robust error handling to ensure that:
+- Required keys are present in the JSON data
+- Files exist before attempting to read them
+- JSON data is valid before processing
+
 ## Program Requirements
 
-- Python 3.6 or higher
+- Python 3.9 or higher
 - No external dependencies (uses only Python standard library)
 
 ## How to Run the Program
 
-1. Ensure you have Python 3.6+ installed on your system
+1. Ensure you have Python 3.9+ installed on your system
 2. Navigate to the project directory in your terminal
 3. Run the main script:
 

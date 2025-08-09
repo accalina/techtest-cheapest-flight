@@ -4,6 +4,12 @@ from src.utils import read_json_file
 
 
 def extract_flight_data(test_case):
+    # Check if all required keys are present in the test case
+    required_keys = ['n', 'flights', 'src', 'dst', 'k']
+    for key in required_keys:
+        if key not in test_case:
+            raise KeyError(f"Missing required key '{key}' in test case data")
+    
     n = test_case['n']
     flights = test_case['flights']
     src = test_case['src']

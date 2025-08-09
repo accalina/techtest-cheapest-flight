@@ -26,9 +26,31 @@ def test_extract_flight_data():
     
     print("test_extract_flight_data passed")
 
+def test_extract_flight_data_missing_key():
+    """Test extract_flight_data function with missing key"""
+    # Test case with missing 'k' key
+    test_case = {
+        "n": 3,
+        "flights": [[0, 1, 100], [1, 2, 100], [0, 2, 500]],
+        "src": 0,
+        "dst": 2
+        # 'k' key is missing
+    }
+    
+    try:
+        n, flights, src, dst, k = extract_flight_data(test_case)
+        assert False, "Expected KeyError but none was raised"
+    except KeyError as e:
+        # Check if the error message is correct
+        assert "Missing required key 'k'" in str(e), f"Expected error message about missing 'k' key, but got: {e}"
+        print("test_extract_flight_data_missing_key passed")
+    except Exception as e:
+        assert False, f"Expected KeyError but got {type(e).__name__}: {e}"
+
 def main():
     print("Running tests for main.py...")
     test_extract_flight_data()
+    test_extract_flight_data_missing_key()
     print("All tests for main.py passed!")
 
 if __name__ == "__main__":

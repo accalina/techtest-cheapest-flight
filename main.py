@@ -10,6 +10,36 @@ def extract_flight_data(test_case):
         if key not in test_case:
             raise KeyError(f"Missing required key '{key}' in test case data")
     
+    # Validate the format of the values
+    # n should be an integer
+    if not isinstance(test_case['n'], int):
+        raise ValueError(f"Invalid value for 'n': expected integer, got {type(test_case['n'])}")
+    
+    # flights should be a list of lists, where each inner list has 3 elements (from, to, price) and all elements are integers
+    if not isinstance(test_case['flights'], list):
+        raise ValueError(f"Invalid value for 'flights': expected list, got {type(test_case['flights'])}")
+    
+    for i, flight in enumerate(test_case['flights']):
+        if not isinstance(flight, list):
+            raise ValueError(f"Invalid value for 'flights[{i}]': expected list, got {type(flight)}")
+        if len(flight) != 3:
+            raise ValueError(f"Invalid value for 'flights[{i}]': expected list with 3 elements, got {len(flight)}")
+        for j, value in enumerate(flight):
+            if not isinstance(value, int):
+                raise ValueError(f"Invalid value for 'flights[{i}][{j}]': expected integer, got {type(value)}")
+    
+    # src should be an integer
+    if not isinstance(test_case['src'], int):
+        raise ValueError(f"Invalid value for 'src': expected integer, got {type(test_case['src'])}")
+    
+    # dst should be an integer
+    if not isinstance(test_case['dst'], int):
+        raise ValueError(f"Invalid value for 'dst': expected integer, got {type(test_case['dst'])}")
+    
+    # k should be an integer
+    if not isinstance(test_case['k'], int):
+        raise ValueError(f"Invalid value for 'k': expected integer, got {type(test_case['k'])}")
+    
     n = test_case['n']
     flights = test_case['flights']
     src = test_case['src']
@@ -18,11 +48,20 @@ def extract_flight_data(test_case):
     return n, flights, src, dst, k
 
 def main():
-    flight_test_cases = read_json_file('question.json')
-    for test_case in flight_test_cases:
-        n, flights, src, dst, k = extract_flight_data(test_case)
-        cheapest_price = findCheapestPrice(n, flights, src, dst, k)
-        print(f"The cheapest price from {src} to {dst} with at most {k} stops is: {cheapest_price}")
+    try:
+        flight_test_cases = read_json_file('question.json')
+    except Exception as e:
+        print(f"Error reading flight data: {e}")
+        return
+    
+    for i, test_case in enumerate(flight_test_cases):
+        try:
+            n, flights, src, dst, k = extract_flight_data(test_case)
+            cheapest_price = findCheapestPrice(n, flights, src, dst, k)
+            print(f"The cheapest price from {src} to {dst} with at most {k} stops is: {cheapest_price}")
+        except Exception as e:
+            print(f"Error processing test case {i}: {e}")
+            continue
 
 if __name__ == '__main__':
     main()

@@ -10,6 +10,8 @@ The program includes robust error handling to ensure that:
 - Required keys are present in the JSON data
 - Files exist before attempting to read them
 - JSON data is valid before processing
+- Values in the JSON data are of the correct type and format
+- The program gracefully handles errors and continues processing other test cases
 
 ## Program Requirements
 
